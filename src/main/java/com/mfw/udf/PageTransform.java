@@ -18,7 +18,7 @@ public class PageTransform extends UDF {
     public static HashMap<String,String> map;
     static {
         StdTomap.readFileByMap2();
-        map= StdMap.readFileByMap2("std.txt");
+        map= StdMap.readFileByMap2("std2.txt");
     }
     public Text evaluate(Text u,Text a) {
         Text text = new Text("std");
@@ -47,8 +47,6 @@ public class PageTransform extends UDF {
         System.out.println(map.get("闪屏页5")+"=====");*/
         if (bb.equals("std")) {
             c = map.get(aa+"1");
-        }else if(bb.equals("channel")){
-            c = map.get(aa+"6");
         }else if(bb.equals("level1")){
             c = map.get(aa+"2");
         }else if(bb.equals("level2")){
@@ -57,6 +55,8 @@ public class PageTransform extends UDF {
             c = map.get(aa+"4");
         }else if(bb.equals("types")){
             c = map.get(aa+"5");
+        }else if(bb.equals("channel")){
+            c = map.get(aa+"6");
         }
         if(null==c){
             return null;
