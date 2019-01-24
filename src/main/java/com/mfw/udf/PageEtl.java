@@ -20,7 +20,7 @@ public class PageEtl extends UDF {
     private String attr_tp = null;
     private String tpre = null;
 
-    //三个参数为triggerNmae
+    //三个参数为triggerName
     public Text evaluate(Text uri, Text puri, Text attr) {
         IntWritable b=new IntWritable(0);
         return evaluate(uri, puri, attr, b);

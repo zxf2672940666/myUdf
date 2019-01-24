@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @program: myUdf
  * @description: 用于double类型array的求和
- * @author: Mr.Wang
+ * @author: LiuSenGen
  * @create: 2019-01-23 19:17
  **/
 public class Array_sum extends GenericUDF {
