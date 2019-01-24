@@ -24,7 +24,7 @@ public class PageTransform extends UDF {
         Text text = new Text("std");
         return evaluate(u,a,text);
     }
-    //a:name
+    //用于得到stdname
     public Text evaluate(Text u,Text a, Text b) {
         if (null == a || a.getLength() <= 0) {
             return null;

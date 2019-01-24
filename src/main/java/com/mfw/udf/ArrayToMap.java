@@ -5,6 +5,9 @@ import org.apache.hadoop.io.Text;
 
 
 public class ArrayToMap  extends UDF {
+
+
+    //两个字段按";" 分割，拼成键值对形式字符串
     public Text evaluate(Text a, Text b) {
         Text text=new Text();
         if (a == null || b == null) {

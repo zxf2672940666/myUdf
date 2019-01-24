@@ -31,7 +31,11 @@ public class JsonDetails extends UDF {
         return text;
     }
     private static Map<String, String> getMapForJson(String jsonStr,String b)  {
-        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(jsonStr);
+        com.alibaba.fastjson.JSONObject jsonObject = null;
+        try{ jsonObject = JSON.parseObject(jsonStr);}
+        catch (Exception e){
+            return null;
+        }
         com.alibaba.fastjson.JSONObject detailsjobj;
         if(b.contains("detail")) {
             if (jsonStr.contains("item_details")) {
