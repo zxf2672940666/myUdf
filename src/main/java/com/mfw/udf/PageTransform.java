@@ -40,8 +40,8 @@ public class PageTransform extends UDF {
       /*  for (Map.Entry<String, String> entry : map.entrySet()) {
             entry.getValue();
             System.out.println("line " +  entry.getKey() + ": " + entry.getValue());
-        }*/
-       /* System.out.println(map.size());
+        }
+       *//* System.out.println(map.size());
         System.out.println(map.get("闪屏页5")+"=====");*/
         if (bb.equals("std")) {
             c = map.get(aa+"1");

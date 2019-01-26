@@ -20,6 +20,17 @@ import java.util.List;
 public class Array_sum extends GenericUDF {
     private static final Logger LOG = Logger.getLogger(Array_sum.class);
     private ListObjectInspector listInspector;
+
+    @Override
+    public ObjectInspector initialize(ObjectInspector[] arg0)
+            throws UDFArgumentException {
+        this.listInspector = (ListObjectInspector) arg0[0];
+        LOG.info(" Sum Array input type is " + listInspector + " element = " + listInspector.getListElementObjectInspector());
+
+        ObjectInspector returnType = PrimitiveObjectInspectorFactory.javaDoubleObjectInspector;
+        return returnType;
+    }
+
     public Double evaluate(List<Object> strArray) {
         double total = 0.0;
         for (Object obj : strArray) {
@@ -57,13 +68,5 @@ public class Array_sum extends GenericUDF {
         return "sum_array()";
     }
 
-    @Override
-    public ObjectInspector initialize(ObjectInspector[] arg0)
-            throws UDFArgumentException {
-        this.listInspector = (ListObjectInspector) arg0[0];
-        LOG.info(" Sum Array input type is " + listInspector + " element = " + listInspector.getListElementObjectInspector());
 
-        ObjectInspector returnType = PrimitiveObjectInspectorFactory.javaDoubleObjectInspector;
-        return returnType;
-    }
 }
