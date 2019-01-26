@@ -39,9 +39,9 @@ public class JsonDetails extends UDF {
         com.alibaba.fastjson.JSONObject detailsjobj;
         if(b.contains("detail")) {
             if (jsonStr.contains("item_details")) {
-                detailsjobj = jsonObject.getJSONObject("item_details");
+                detailsjobj = JSON.parseObject("item_details");
             } else {
-                detailsjobj = jsonObject.getJSONObject("item_detail");
+                detailsjobj = JSON.parseObject("item_detail");
             }
         }else if(b.contains("info")){
             detailsjobj = jsonObject.getJSONObject("item_info");
