@@ -2,7 +2,6 @@ package com.mfw.udf;
 
 
 import com.mfw.utils.StdMap;
-import com.mfw.utils.StdTomap;
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.io.Text;
 
@@ -17,7 +16,6 @@ import java.util.HashMap;
 public class PageTransform extends UDF {
     public static HashMap<String,String> map;
     static {
-        StdTomap.readFileByMap2();
         map= StdMap.readFileByMap2("std2.txt");
     }
     public Text evaluate(Text u,Text a) {

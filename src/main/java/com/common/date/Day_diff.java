@@ -1,4 +1,4 @@
-package com.commen.date;
+package com.common.date;
 
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.log4j.Logger;

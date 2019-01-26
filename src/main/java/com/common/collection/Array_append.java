@@ -1,4 +1,4 @@
-package com.commen.collection;
+package com.common.collection;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;

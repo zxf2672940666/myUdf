@@ -17,7 +17,7 @@ public class StdTomap {
     public  static HashMap<String, ArrayList> stdmap = null;
 
     public static void readFileByMap2() {
-        InputStream in = FileHandle.class.getClassLoader().getResourceAsStream("std.txt");
+        InputStream in = StdTomap.class.getClassLoader().getResourceAsStream("std.txt");
         BufferedReader reader =null;
         HashMap<String,ArrayList> map=new HashMap<String,ArrayList>();
         try {
