@@ -18,6 +18,9 @@ public class JsonDetails extends UDF {
 
     public Text evaluate(Text a,Text b)  {
         Map<String,String> map=new HashMap<String, String>();
+        if(a==null){
+            return null;
+        }
         map=getMapForJson(a.toString(),b.toString());
         if(map==null){
             return null;
