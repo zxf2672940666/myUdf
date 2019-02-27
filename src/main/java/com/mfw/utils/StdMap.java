@@ -16,7 +16,7 @@ import java.util.Map;
 public class StdMap {
 
     public static HashMap<String, String> readFileByMap2(String s) {
-        InputStream in = FileHandle.class.getClassLoader().getResourceAsStream(s);
+        InputStream in = StdMap.class.getClassLoader().getResourceAsStream(s);
         BufferedReader reader =null;
         HashMap<String,String> map=new HashMap<String,String>();
         try {
@@ -54,5 +54,6 @@ public class StdMap {
             entry.getValue();
             System.out.println("line " +  entry.getKey() + ": " + entry.getValue());
         }
+        System.out.println(map.size());
     }
 }

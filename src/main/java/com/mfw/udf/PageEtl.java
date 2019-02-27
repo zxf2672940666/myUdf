@@ -38,9 +38,14 @@ public class PageEtl extends UDF {
         String page_u;
         String page_p;
         jsonGetAttr(attr.toString()); //获取attr第一层的attr_name,attr_tp,attr_tpt,attr_tpre
+        //uri 和 attr_name 解析出 std_name
         if (null == attr_name || attr_name.length() == 0) {
             page_u = null;
-        } else {
+        }else if("启动".equals(attr_name)){
+            page_u="启动";
+        }else if("启动页".equals(attr_name)){
+            page_u="启动页";
+        }else {
             Text text1 = pageTransform.evaluate(uri,new Text(attr_name));
             if (null == text1) {
                 page_u = null;
@@ -48,9 +53,14 @@ public class PageEtl extends UDF {
                 page_u = text1.toString();
             }
         }
+        //puri 和 attr_tp 解析出 std_name
         if (null == attr_tp || attr_tp.length() == 0 || null == puri) {
             page_p = null;
-        } else {
+        } else if("启动".equals(attr_tp)){
+            page_p="启动";
+        }else if("启动页".equals(attr_tp)){
+            page_p="启动页";
+        }else {
             Text text1 = pageTransform.evaluate(puri,new Text(attr_tp));
             if (null == text1) {
                 page_p = null;
@@ -143,9 +153,16 @@ public class PageEtl extends UDF {
             if(tp!=null) {
                 Text text1 = pageTransform.evaluate(new Text(turi), new Text(tp));
                 if (text1 != null) {
-                    std = text1.toString();
+                    if("启动页".equals(tp)){
+                        std="启动页";
+                    }else if("启动".equals(tp)){
+                        std="启动";
+                    }else {
+                        std = text1.toString();
+                    }
                 }
             }
+
         }
         if (null != std) {
             if ("通用浏览器".equals(tpt) || "酒店下单通用浏览器".equals(tpt) || "".equals(tpt)) {

@@ -94,8 +94,14 @@ public class PageName extends UDF {
                 pagename = "点亮全球";
             } else if (urlParse(u, "path", "/activity_footballbaby_home/")) {
                 pagename = "世界杯足球宝贝";
+            } else if (urlParse(u, "path", "/sales_promotion/activity/sales_baby/")) {
+                pagename = "营销活动页";
+            } else if (urlParse(u, "path", "/sales_promotion/activity/thomas")) {
+                pagename = "营销活动页";
             } else if (urlParse(u, "path", "/sales_promotion/")) {
-                pagename = "电商促销活动";
+                pagename = "促销活动页";
+            } else if (urlParse(u, "path", "//sales_promotion/")) {
+                pagename = "促销活动页";
             } //https://w.mafengwo.cn/sales_promotion/recruit/index
             else if (urlParse(u, "path", "/activity_fancy_note/")) {
                 pagename = "游记活动";
@@ -202,9 +208,12 @@ public class PageName extends UDF {
             } else if (urlParse(u, "path", "/sales_customize/scheme")) {
                 pagename = "电商定制方案详情";
             } // https://w.mafengwo.cn/sales_customize/scheme?id=1615301099196474
+            else if (urlParse(u, "path", "/trans_flight_lpc/amap.html")) {
+                pagename = "探索世界地图页";
+            } ////- update by SynHao at 20180914 09:28
             else if (urlParse(u, "path", "/trans_flight_lpc/content.html")) {
                 pagename = "大交通频道-特价机票首页";
-            } ////- update by SynHao at 20180914 09:28
+            }
             else if (urlParse(u, "path", "/trans_flight_lpc/stroke.html")) {
                 pagename = "大交通频道-特价机票行程页";
             } else if (urlParse(u, "path", "/trans_car_flight/selectCar.html")) {
@@ -252,7 +261,10 @@ public class PageName extends UDF {
             } //https://w.mafengwo.cn/sales_fe/index.html#/quickbook/10035/49646
             else if (regpa("/sales_train/index.html#/train/list", u)) {
                 pagename = "大交通火车票列表页";
-            } //https://w.mafengwo.cn/sales_train/index.html#/train/list?depart_code=beijing&depart_name=%E5%8C%97%E4%BA%AC&dest_code=shanghai&dest_name=%E4%B8%8A%E6%B5%B7&depart_date=2018-10-25&high_speed_rail=0
+            }
+            else if (regpa("/sales_train/index.html#/train/booking", u)) {
+                pagename = "火车票预订页";
+            }  //https://w.mafengwo.cn/sales_train/index.html#/train/list?depart_code=beijing&depart_name=%E5%8C%97%E4%BA%AC&dest_code=shanghai&dest_name=%E4%B8%8A%E6%B5%B7&depart_date=2018-10-25&high_speed_rail=0
             else if (regpa("/sales_fe/index.html#/packageHub", u)) {
                 pagename = "电商打包产品";
             } //https://w.mafengwo.cn/sales_fe/index.html#/packageHub?id=118
@@ -307,11 +319,20 @@ public class PageName extends UDF {
             else if (urlParse(u, "path", "/sfe-app/quickbook.html")) {
                 pagename = "极速预订频道-极速预订产品列表页";
             } //add 201901
+            else if (urlParse(u, "path", "/sfe-app/gentuan_list.html")) {
+                pagename = "跟团游频道-跟团游列表页";
+            }
+            else if (urlParse(u, "path", "/sfe-app/mdd_channel.html")) {
+                pagename = "跟团游频道-目的地聚合页";
+            }
             else if (urlParse(u, "path", "/trans_car_flight/game.html")) {
                 pagename = "接送机租车频道-疯狂小汽车活动页";
             } //add 201901
             else if (urlParse(u, "path", "/trans_car_flight/orderDetail.html")) {
                 pagename = "接送机租车频道-接送机订单详情页";
+            }
+            else if (urlParse(u, "path", "/mtraffic/flightchn/list.html?")) {
+                pagename = "国内机票列表页";
             } //add 201901
             else {
                 pagename = null;
@@ -425,7 +446,7 @@ public class PageName extends UDF {
                     pagename = "酒店列表页";
                 } //https://m.mafengwo.cn/hotel/15284/
                 else if (urlParse(u, "path", "/hotel/license")) {
-                    pagename = "酒店合作伙伴";
+                    pagename = "商家资质";
                 } //https://m.mafengwo.cn/hotel/license#/otaList
                 else if (urlParse(u, "path", "/hotel/\\d+\\.html")) {
                     pagename = "酒店详情页";
@@ -443,20 +464,29 @@ public class PageName extends UDF {
                 } else if (urlParse(u, "path", "/hotelzd/success.php")) {
                     pagename = "酒店直订订单支付成功";
                 } //https://www.mafengwo.cn/hotelzd/success.php?sOrderId=51181022016776848&anonymous=62bf995473930d814f80cb5acd1c8426
+                else if (urlParse(u, "path", "/hotel/activity/2018_0815")) {
+                    pagename = "8.15酒店大促";
+                }
+                else if (urlParse(u, "path", "/hotel/activity/2018_1111")) {
+                    pagename = "11.11酒店寻梦季";
+                }
+                else if (urlParse(u, "path", "/hotel/activity/2019_0110")) {
+                    pagename = "1.10-1.11酒店年货节";
+                }
                 else if (urlParse(u, "path", "/hotel/activity/")) {
                     pagename = "酒店大促活动";
                 } //https://www.mafengwo.cn/hotelzd/success.php?sOrderId=51181022016776848&anonymous=62bf995473930d814f80cb5acd1c8426
                 else if (urlParse(u, "path", "/hotel/get_coupon")) {
-                    pagename = "新手红包页";
+                    pagename = "优惠券落地页";
                 } //add 201901
                 else if (urlParse(u, "path", "/hotel/qa/add_question")) {
-                    pagename = "创建问答页";
+                    pagename = "酒店问答创建问题页";
                 } //add 201901
                 else if (urlParse(u, "path", "/hotel/qa/detail")) {
                     pagename = "问答详情页";
-                } //add 201901
+                }
                 else if (urlParse(u, "path", "/hotel/qa/list")) {
-                    pagename = "问答列表页";
+                    pagename = "酒店问答详情页";
                 } //add 201901
                 else if (urlParse(u, "path", "/hotel_zx/hotel/index.php")) {
                     pagename = "有鱼详情页";
@@ -662,14 +692,20 @@ public class PageName extends UDF {
                     pagename = "我的优惠券";
                 } //https://m.mafengwo.cn/sales/coupon
                 //大促
+                else if (urlParse(u, "path", "/sales/activity/honey_center/")) {
+                    pagename = "蜂蜜活动页";
+                }
+                else if (urlParse(u, "path", "/sales/activity/daka/")) {
+                    pagename = "蜂蜜活动页";
+                }
                 else if (urlParse(u, "path", "/sales/activity/promotion/\\d+")) {
-                    pagename = "电商促销活动";
+                    pagename = "营销活动页";
                 } ///sales/activity/promotion/158/
                 else if (urlParse(u, "path", "/sales/app_promotion")) {
-                    pagename = "电商促销活动";
+                    pagename = "营销活动页";
                 } //https://m.mafengwo.cn/sales/app_promotion?timestamp=1527818725
                 else if (urlParse(u, "path", "/sales/activity")) {
-                    pagename = "电商促销活动";
+                    pagename = "营销活动页";
                 } //特别
                 else if (urlParse(u, "path", "/localdeals/mdd_topic_")) {
                     pagename = "自由行攻略";
@@ -756,7 +792,7 @@ public class PageName extends UDF {
                     pagename = "温泉主题活动页";
                 } //add 201901
                 else if (urlParse(u, "path", "poi/poi/onlineStarList")) {
-                    pagename = "网红POI聚合页";
+                    pagename = "POI网红打卡地列表页";
                 } //add 201901
                 else {
                     pagename = null;
@@ -796,6 +832,9 @@ public class PageName extends UDF {
                 else if (urlParse(u, "path", "/gonglve/ziyouxing/modify/")) {
                     pagename = "自由行攻略编辑";
                 } ///gonglve/ziyouxing/modify/
+                else if (urlParse(u, "path", "/gonglve/ziyouxing/user_task/recommend_guide")) {
+                    pagename = "攻略打卡任务页";
+                }
                 else {
                     pagename = null;
                 } //end
@@ -942,7 +981,7 @@ public class PageName extends UDF {
             } //社区打卡活动
             else if (urlParse(u, "path", "/daka/")) {
                 if (urlParse(u, "path", "/daka/task")) {
-                    pagename = "用户打卡任务页";
+                    pagename = "用户打卡页";
                 } else if (urlParse(u, "path", "/daka?/$")) {
                     pagename = "用户打卡页";
                 } else if (urlParse(u, "path", "/daka/patch/index")) {
@@ -951,7 +990,13 @@ public class PageName extends UDF {
                     pagename = "用户补签成功";
                 } else if (urlParse(u, "path", "/daka/patch")) {
                     pagename = "用户补签页";
-                } else {
+                } else if (urlParse(u, "path", "/mc/core/daka/RecommendFollower")) {
+                    pagename = "推荐关注用户页";
+                } else if (urlParse(u, "path", "/mc/core/daka/Task")) {
+                    pagename = "用户打卡页";
+                } else if (urlParse(u, "path", "/mc/core/daka/RecommendFollower")) {
+                    pagename = "推荐关注用户页";
+                }else {
                     pagename = null;
                 } //end
             } //嗡嗡
@@ -977,9 +1022,12 @@ public class PageName extends UDF {
                 else if (urlParse(u, "path", "/wengs/invitation2.php")) {
                     pagename = "嗡嗡跳转页";
                 } //https://m.mafengwo.cn/wengs/invitation2.php
-                else if (urlParse(u, "path", "/wengs/activity/index")) {
-                    pagename = "嗡嗡活动页";
-                } //add 201901
+                else if (urlParse(u, "path", "/wengs/j/t?tags=")) {
+                    pagename = "聚合标签落地页";
+                }
+                else if (regpa("/hotel/order_detail/index", u)) {
+                    pagename = "酒店订单详情";
+                }//add 201901
                 else {
                     pagename = null;
                 } //end
@@ -1172,7 +1220,17 @@ public class PageName extends UDF {
                 else {
                     pagename = null;
                 } //end
-            } else if (urlParse(u, "path", "/search.php")) {
+            } //民宿
+            else if (urlParse(u, "path", "homestay")){
+                if (regpa("homestay/\\?action=create_order", u)) {
+                    pagename = "民宿预订";
+                }else if (regpa("homestay\\?action=order_detail", u)) {
+                    pagename = "民宿订单详情";
+                }else {
+                    pagename=null;
+                }
+            }
+            else if (urlParse(u, "path", "/search.php")) {
                 pagename = "搜索主页";
             } // https://m.mafengwo.cn/search.php
             else if (urlParse(u, "path", "/msg/")) {
@@ -1318,9 +1376,13 @@ public class PageName extends UDF {
             else if ("/404".equals(getUrl(u,"path",null))) {
                 pagename = "错误页";
             } //add 201901
-            else if (urlParse(u, "path", "/mc/core/daka/Task")) {
-                pagename = "每日任务";
-            } else if (regReplace(u) != "") {
+            else if (urlParse(u, "path", "mc/core/medal/index")) {
+                pagename = "用户勋章页";
+            }
+            else if (urlParse(u, "path", "/mmobile/wanfamobile/detail")) {
+                pagename = "新玩法详情页";
+            }
+            else if (regReplace(u) != "") {
                 pagename = "可解析出url参数且url为马蜂窝";
             } else {
                 pagename = null;
@@ -1338,9 +1400,9 @@ public class PageName extends UDF {
             return null;
         }
         Text text = new Text(pagename);
-        return text;
-    }
+        return text;}
 
+   // 传入uri，uri的参数类型，判断该uri的该参数是否匹配reg正则。其中host是判断是否等于reg
     public Boolean urlParse(String url, String type, String reg) {
         return urlParse(url, type, reg, null);
     }
@@ -1390,7 +1452,7 @@ public class PageName extends UDF {
 
     }
 
-    //获取url参数
+    //获取url各个参数
     public String getUrl(String url,String type,String quekey){
         URL url1 = null;
         try {
@@ -1425,12 +1487,14 @@ public class PageName extends UDF {
         }
     }
 
+    //判断字符串u是否匹配正则表达式reg
     public boolean regpa(String reg, String u) {
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(u);
         return matcher.find();
     }
 
+    //判断uri 的 host是否匹配 reg正则
     private boolean hostreg(String u, String reg) {
         URL url1 = null;
         try {
@@ -1448,7 +1512,7 @@ public class PageName extends UDF {
     }
 
 
-
+    // 对uri path 的一些字符串做 特定的替换
     public String regReplace(String url) {
         URL url1 = null;
         try {
@@ -1462,10 +1526,10 @@ public class PageName extends UDF {
     }
 
     public static void main(String[] args) {
-       String uri="http://app.mafengwo.cn/launch_splash";
+       String uri="http://app.mafengwo.cn/traffic/index?_ouri=http%3A%2F%2Fm.mafengwo.cn%2Fnb%2Fpublic%2Fsharejump.php%3Ftype%3D1500%26source%3Dapp_home&source=app_home";
         Text text=new Text(uri);
         PageName pageName=new PageName();
-        System.out.println(pageName.evaluate(text,new Text("fsd")));
+        System.out.println(pageName.evaluate(text,new Text("大交通频道-首页")));
 
     }
 

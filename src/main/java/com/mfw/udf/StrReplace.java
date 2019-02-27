@@ -24,10 +24,19 @@ public class StrReplace extends UDF {
         return new Text(aa);
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         Text text=new Text("{\"app_home_change\":\"a\"}");
         StrReplace strReplace=new StrReplace();
         Text evaluate = strReplace.evaluate(text);
         System.out.println(evaluate);
-    }*/
+
+        String a=new String("asd");
+        String b=new String("asd");
+
+        if (a.equals(b)){
+            System.out.println(1);
+        }
+    }
 }
+
+
