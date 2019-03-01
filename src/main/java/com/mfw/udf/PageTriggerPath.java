@@ -1,6 +1,7 @@
 package com.mfw.udf;
 
 import org.apache.hadoop.hive.ql.exec.UDF;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 
 /**
@@ -12,15 +13,15 @@ import org.apache.hadoop.io.Text;
 public class PageTriggerPath extends UDF {
     public Text evaluate(Text uri, Text puri, Text attr) {
         PageEtl pageEtl=new PageEtl();
-        Text a=pageEtl.evaluate(uri,puri,attr);
+        Text a=pageEtl.evaluate(uri,puri,attr,new IntWritable(1));
         if(a==null){
             return null;
         }
         String aa=a.toString();
         String[] path = aa.split("-->");
         StringBuilder p= new StringBuilder();
-        for (String s : path) {
-            String[] j = s.split("\\+");
+        for (int i=0;i<path.length-1;i++) {
+            String[] j = path[i].split("\\+");
             p.append(j[0]).append("_");
 
         }
@@ -33,9 +34,9 @@ public class PageTriggerPath extends UDF {
     public static void main(String[] args) {
         Text text = new Text();
         Text text1 = new Text();
-        String url = "https://passport.mafengwo.cn/?return_url=https%3A%2F%2Fw.mafengwo.cn%2Fgroup_h5%2Fgroup_my";
-        String puri = "https://passport.mafengwo.cn/?return_url=https%3A%2F%2Fw.mafengwo.cn%2Fgroup_h5%2Fgroup_my";
-        String attr = "{\"merge_channel\":\"direct\",\"shumeng_did\":\"Du1DBU4T/2jyGJPnXFkmlodMAuEz6fCuymZFQzaGgwrTgsdqv4n1Pk80bxgl8fbT3BLb/XdYDmvL7/V8pYvfrXpw\",\"out\":\"parent\",\"_tpre\":{\"_tl\":7,\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心_通用浏览器_通用浏览器_通用浏览器_null\",\"_tid\":\"41030e81-7e85-48a9-94c1-54e54adc37cc\",\"_tpi\":\"af5b009a-0140-4c64-932e-1454e8590321\",\"_tpre\":{\"_tl\":6,\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心_通用浏览器_通用浏览器_通用浏览器\",\"_tpi\":\"78f141b7-c21d-4ace-91b4-3c11aa4df524\",\"_turi\":\"https://w.mafengwo.cn/group_h5/article_detail/6443573\",\"_tid\":\"ff861999-f370-45be-944b-4eb8b0ee3b5b\",\"_tpre\":{\"_tl\":5,\"_tid\":\"2a87c261-d342-45d6-9e39-cb596e83574f\",\"_tpre\":{\"_tpi\":\"62ff307e-5a4e-473b-8f82-de1cdaf21983\",\"_tpre\":{\"_tpre\":{\"_tl\":2,\"_tpre\":{\"_tpt\":\"首页信息流_55\",\"_tl\":1,\"_tpa\":\"闪屏页_首页\",\"_tid\":\"f478badd-c7de-42b2-8a3b-9aac253bd7b6\",\"_tpi\":\"b32272a7-8518-419b-9eb0-e7f0124dc6f2\",\"_tpre\":{\"_tl\":0,\"_tpa\":\"闪屏页\",\"_tid\":\"2f4d6508-6bd5-4c0a-b9b3-b3c1fa88df64\",\"_tpi\":\"28fc3146-b83a-41ee-b65d-6306f8241638\",\"_tp\":\"闪屏页\",\"_turi\":\"http://app.mafengwo.cn/launch_splash\",\"_tpt\":\"正常\"},\"_tp\":\"首页\",\"_turi\":\"http://app.mafengwo.cn/index?channel_id=55\"},\"_turi\":\"http://app.mafengwo.cn/weng/reply_list?weng_id=1622549290494260\",\"_tpt\":\"嗡嗡回复列表\",\"_tpa\":\"闪屏页_首页_嗡嗡回复列表\",\"_tid\":\"162c0967-7e1e-4076-bcf5-7f76bbf8f3ed\",\"_tpi\":\"8f57ac23-d24c-43dd-b594-922f70680ac8\",\"_tp\":\"嗡嗡回复列表\"},\"_tp\":\"个人中心\",\"_tid\":\"8e29e03a-e3d6-44b9-b0b9-ab117b33bd28\",\"_tpi\":\"42256cf7-cbc7-4679-8331-7f96849b01c7\",\"_tpt\":\"个人中心\",\"_tl\":3,\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心\",\"_turi\":\"http://app.mafengwo.cn/user/index?user_id=5469004\"},\"_tpt\":\"通用浏览器\",\"_tl\":4,\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心_通用浏览器\",\"_tid\":\"44acc1ad-e742-4418-9b64-38eed41a4aa6\",\"_tp\":\"通用浏览器\",\"_turi\":\"https://www.mafengwo.cn/g/i/6443573.html\"},\"_turi\":\"https://m.mafengwo.cn/g/i/6443573.html\",\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心_通用浏览器_通用浏览器\",\"_tpi\":\"efd3a5eb-2ced-42ba-b510-f1d1511b316f\",\"_tp\":\"通用浏览器\",\"_tpt\":\"通用浏览器\"},\"_tp\":\"通用浏览器\",\"_tpt\":\"通用浏览器\"},\"_turi\":\"https://w.mafengwo.cn/group_h5/group_my\"},\"father_umddid\":10065,\"name\":\"通用浏览器\",\"rroot\":\"other\",\"umddid_state\":21536,\"shumei_did\":\"201901031207426c98a83576669175ce03060212cb3516010b6b32cecb6215\",\"travel_status\":\"{\\\"status\\\":2,\\\"mddid\\\":\\\"10065\\\",\\\"strategy\\\":\\\"H1\\\"}\",\"io\":\"i\",\"in\":\"child\",\"duration\":\"66\",\"host\":\"app\",\"rhost\":\"passport\",\"channel\":\"direct\",\"_tp\":\"通用浏览器\",\"type\":\"web\",\"index_in_launch\":\"62\",\"travel_status.mddid\":\"10065\",\"url\":\"https://passport.mafengwo.cn/?return_url=https%3A%2F%2Fw.mafengwo.cn%2Fgroup_h5%2Fgroup_my\",\"leaf1\":\"\",\"travel_status.strategy\":\"H1\",\"_tpa\":\"闪屏页_首页_嗡嗡回复列表_个人中心_通用浏览器_通用浏览器_通用浏览器_null_通用浏览器\",\"travel_status.status\":2,\"_tid\":\"385fd6e6-ced1-4b7f-8ca6-ad28259c819f\",\"refer\":\"https://passport.mafengwo.cn/?return_url=https%3A%2F%2Fw.mafengwo.cn%2Fgroup_h5%2Fgroup_my\",\"duration_fixed\":0,\"_turi\":\"https://passport.mafengwo.cn/?return_url=https%3A%2F%2Fw.mafengwo.cn%2Fgroup_h5%2Fgroup_my\",\"leaf2\":\"\",\"travelling\":-1,\"channel_type\":\"direct\",\"start\":\"1547946122177\",\"root\":\"other\",\"identifier\":\"edd068a9-3ea5-486f-8766-2831b9569d9f\",\"min\":\"09:02\",\"_tpi\":\"edd068a9-3ea5-486f-8766-2831b9569d9f\",\"sign_valid\":1,\"_tpt\":\"通用浏览器\",\"otype\":\"inner\",\"_tl\":8}";
+        String url = "http://app.mafengwo.cn/poi/detail?_owner_mdd_id=15284&mdd_id=15284&poi_id=12563&poi_type_id=3";
+        String puri = "http://app.mafengwo.cn/poi/map?map_source_type=google&mdd_id=15284&poi_id=";
+        String attr = "{\"_tpi\":\"4937797C14A241B999A1D0163CC53855\",\"leaf1\":\"detail\",\"_owner_mdd_id\":\"15284\",\"refer\":\"http://app.mafengwo.cn/poi/map?map_source_type=google&mdd_id=15284&poi_id=\",\"portrait\":\"1\",\"url\":\"http://app.mafengwo.cn/poi/detail?_owner_mdd_id=15284&mdd_id=15284&poi_id=12563&poi_type_id=3\",\"channel\":2581,\"min\":\"13:31\",\"index_in_launch\":\"11\",\"leaf2\":\"index\",\"rroot\":\"poi\",\"channel_type\":\"other\",\"child_channel\":0,\"rleaf1\":\"map\",\"_tpre\":\"{\\\"_tpre\\\":{\\\"_tpre\\\":{\\\"_turi\\\":\\\"http:\\\\/\\\\/app.mafengwo.cn\\\\/launch\\\",\\\"_tl\\\":\\\"0\\\",\\\"_tp\\\":\\\"启动\\\",\\\"_tid\\\":\\\"7E66197F44C4458CAE11A1540EEA7A26\\\",\\\"_tpi\\\":\\\"启动\\\",\\\"_tpt\\\":\\\"正常\\\"},\\\"_tp\\\":\\\"当地主页\\\",\\\"_tid\\\":\\\"897560CCB2C64F75BE946BAE5CD6C9D1\\\",\\\"_tl\\\":\\\"1\\\",\\\"_tpi\\\":\\\"0C425BC08BEA4C8280B94AC467821ABF\\\",\\\"_turi\\\":\\\"http:\\\\/\\\\/app.mafengwo.cn\\\\/local\\\\/index?abtest=app_mdd_wanfa_b&mdd_id=15284&mdd_name=%E6%B8%85%E8%BF%88\\\",\\\"_tpt\\\":\\\"icon_景点玩乐\\\"},\\\"_tp\\\":\\\"POI列表\\\",\\\"_tid\\\":\\\"227328A2255C485A90FC8A82F8FE6CC1\\\",\\\"_tl\\\":\\\"2\\\",\\\"_tpi\\\":\\\"B5D95EEB8C3B40049FC2B250E038F37F\\\",\\\"_turi\\\":\\\"http:\\\\/\\\\/app.mafengwo.cn\\\\/poi\\\\/list?_ouri=http%3A%2F%2Fm.mafengwo.cn%2Fnb%2Fpublic%2Fsharejump.php%3Ftype%3D12%26mddid%3D15284%26type_id%3D3&mdd_id=15284&poi_type_id=3\\\",\\\"_tpt\\\":\\\"POI列表\\\"}\",\"host\":\"app\",\"duration\":\"14.714355\",\"_tl\":\"3\",\"_turi\":\"http://app.mafengwo.cn/poi/map?map_source_type=google&mdd_id=15284&poi_id=\",\"name\":\"POI详情页\",\"io\":\"i\",\"travelling\":1,\"_tid\":\"9B78559EA4524AD5AB8E9436127D6866\",\"start\":\"1551245453.540546\",\"in\":\"parent\",\"_tpt\":\"POI地图页\",\"_tpa\":\"启动_当地主页_POI列表_POI地图页\",\"root\":\"poi\",\"otype\":\"inner\",\"sign_valid\":1,\"rhost\":\"app\",\"_tp\":\"POI地图页\",\"umddid_state\":10083,\"poi\":\"{\\\"poiid\\\":12563,\\\"type_id\\\":3,\\\"type_id_sub\\\":4,\\\"online_mddid\\\":15284}\",\"merge_channel\":2581,\"type\":\"native\",\"out\":\"parent\",\"mddid\":\"15284\",\"identifier\":\"2061A6BF3026471FABAD5D41425EC88A\",\"shumeng_did\":\"D22RiCoS8XakolDzN+N0KKsLRipPnreX6CgSUHD8/oHmkX92\",\"shumei_did\":\"20180517215451b4b9290e43734aa5ce29b9ffa74706c301fea11134a3dfb5\",\"ref_name\":\"program-redirectable-page\",\"_m_open_udid_fix\":\"AF1F4957-969F-47D4-B629-081D922ABF83\",\"from_mddid\":\"15284\",\"father_umddid\":10083,\"poi_id\":\"12563\",\"poi_type_id\":\"3\",\"country_id_sd\":10083,\"mdd_group_sd\":\"A\",\"mdd_area_sd\":\"泰国\",\"travel_status\":\"{\\\"status\\\":1,\\\"mddid\\\":124688,\\\"strategy\\\":\\\"T6\\\"}\",\"travel_status.status\":1,\"travel_status.mddid\":124688,\"travel_status.strategy\":\"T6\"}";
         text.set(url);
         text1.set(puri);
         PageTriggerPath pageEtl = new PageTriggerPath();

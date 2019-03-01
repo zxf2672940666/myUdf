@@ -302,7 +302,7 @@ POI附近的POI列表,POI附近的POI列表页,content,decision,poi,list,content
 POI周边推荐POI列表,POI周边的POI列表页,content,decision,poi,list,content
 POI点评,POI写评论页,content,decision,poi,comments,content
 POI写评论页,POI写评论页,content,decision,poi,comments,content
-POI玩法路线列表,POI玩法路线列表页,content,decision,route,poi_list,content
+POI玩法路线列表,POI玩法路线列表页,content,decision,route,route_list,content
 POI列表搜索结果列表,POI列表搜索结果列表页,content,decision,poi,list,content
 POI问路卡,POI问路卡页,content,decision,poi,other,content
 POI周边的POI列表,POI周边的POI列表页,content,decision,poi,list,content
@@ -910,3 +910,4 @@ POI网红打卡地列表页,POI网红打卡地列表页,content,decision,poi,lis
 电商-懒人频道-行程线路页,懒人频道-行程线路页,content,decision,route,other,content
 电商-懒人频道-懒人详情页,懒人频道-懒人详情页,content,decision,route,detail,content
 扩展POI列表,扩展POI列表,content,decision,poi,list,content
+门票订单确认,门票订单确认,trade,travel,order,order_submit,trade

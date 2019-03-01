@@ -1422,9 +1422,11 @@ public class PageName extends UDF {
         if (quekey != null && query != null) {
             String[] s = query.split("&");
             for (String s1 : s) {
-                if (s1.contains(quekey)) {
-                    quevalue = s1.split("=")[1];
-                    break;
+                if(s1.split("=").length>1) {
+                    if(s1.split("=")[0].equals(quekey)) {
+                        quevalue = s1.split("=")[1];
+                        break;
+                    }
                 }
             }
         }

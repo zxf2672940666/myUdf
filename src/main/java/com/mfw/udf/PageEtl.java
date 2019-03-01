@@ -35,51 +35,85 @@ public class PageEtl extends UDF {
             return null;
         }
         PageTransform pageTransform = new PageTransform();
+        PageItemID pageItemID=new PageItemID();
         String page_u;
         String page_p;
+        String page_item_p;
         jsonGetAttr(attr.toString()); //获取attr第一层的attr_name,attr_tp,attr_tpt,attr_tpre
         //uri 和 attr_name 解析出 std_name
-        if (null == attr_name || attr_name.length() == 0) {
-            page_u = null;
-        }else if("启动".equals(attr_name)){
+        if("启动".equals(attr_name)){
             page_u="启动";
         }else if("启动页".equals(attr_name)){
             page_u="启动页";
         }else {
-            Text text1 = pageTransform.evaluate(uri,new Text(attr_name));
+            Text text1;
+            if(attr_name!=null) {
+                text1 = pageTransform.evaluate(uri, new Text(attr_name));
+            }else {
+                text1= pageTransform.evaluate(uri, new Text(""));
+            }
             if (null == text1) {
                 page_u = null;
             } else {
                 page_u = text1.toString();
             }
         }
+
+       // System.out.println(page_u);
         //puri 和 attr_tp 解析出 std_name
-        if (null == attr_tp || attr_tp.length() == 0 || null == puri) {
+
+        if (null == puri) {
             page_p = null;
         } else if("启动".equals(attr_tp)){
             page_p="启动";
         }else if("启动页".equals(attr_tp)){
             page_p="启动页";
         }else {
-            Text text1 = pageTransform.evaluate(puri,new Text(attr_tp));
+            Text text1;
+            if(attr_tp!=null) {
+                text1 = pageTransform.evaluate(puri, new Text(attr_tp));
+            }else {
+                text1=  pageTransform.evaluate(puri, new Text(""));
+            }
             if (null == text1) {
                 page_p = null;
             } else {
                 page_p = text1.toString();
             }
         }
-        if (page_p != null && !page_p.equals(attr_tpt) && attr_tpt != null && !"".equals(attr_tpt)) {
+        String pagep2=page_p; //存放page_p
+        //System.out.println(page_p);
+        //puri 和 attr解析出 page_item_p
+        if(b.get()==0) {
+            if (pageItemID.evaluate(puri, attr) == null) {
+                page_item_p = "";
+            } else {
+                page_item_p = pageItemID.evaluate(puri, attr).toString();
+            }
+            if(page_p!=null){
+                page_p+=":"+page_item_p;
+            }
+        }
+        //拼接tpt
+        if ("通用浏览器".equals(attr_tpt) || "酒店下单通用浏览器".equals(attr_tpt) || "".equals(attr_tpt)) {
+            attr_tpt = null;
+        }
+        if (page_p != null && !pagep2.equals(attr_tpt) && attr_tpt != null && !"".equals(attr_tpt)) {
             page_p = page_p + "+" + attr_tpt;
         }
-        list.clear();
         String ttpre = tpre;
-        jsonclear(ttpre);
-        reverseList1(list);
+
         if (b.get() == 0) {
+            list.clear();
+            jsonclear(ttpre,attr.toString(),b.get());
+            reverseList1(list);
             if (!"".equals(page_p)) {
                 list.add(page_p);
             }
         } else {
+            list.clear();
+            jsonclear(ttpre,attr.toString(),b.get());
+            reverseList1(list);
             if (!"".equals(page_p)) {
                 list.add(page_p);
             }
@@ -87,7 +121,9 @@ public class PageEtl extends UDF {
                 list.add(page_u);
             }
         }
+        //数组去重
         removeDuplicate(list);
+
         StringBuilder re = new StringBuilder();
         for (String s : list) {
             if(s!=null) {
@@ -128,7 +164,8 @@ public class PageEtl extends UDF {
 
     }
 
-    private void jsonclear(String ttpre) {
+    private void jsonclear(String ttpre,String attr,int idex) {
+        //边界条件
         if (tpre == null) {
             return;
         }
@@ -141,17 +178,27 @@ public class PageEtl extends UDF {
         if (null == jsonObject) {
             return;
         }
+        //变量定义
         String tp = jsonObject.getString("_tp");
         String tpt = jsonObject.getString("_tpt");
         String turi = jsonObject.getString("_turi");
         String s = jsonObject.getString("_tpre");
         PageTransform pageTransform = new PageTransform();
-        String std = null;
+        PageItemID pageItemID=new PageItemID();
+
+        String std = null; //要存入数组的值
+        String stp =""; //记录stdname的值
         if (turi == null) {
             std = "非马蜂窝页面";
+            stp=std;
         } else {
+            //解析stdname
+            Text text1;
             if(tp!=null) {
-                Text text1 = pageTransform.evaluate(new Text(turi), new Text(tp));
+                text1  = pageTransform.evaluate(new Text(turi), new Text(tp));
+            }else{
+                text1 = pageTransform.evaluate(new Text(turi), new Text(""));
+            }
                 if (text1 != null) {
                     if("启动页".equals(tp)){
                         std="启动页";
@@ -161,14 +208,27 @@ public class PageEtl extends UDF {
                         std = text1.toString();
                     }
                 }
-            }
 
+            stp=std;
+            //解析item_id
+            if(idex==0){
+                String item_id="";
+                if(pageItemID.evaluate(new Text(turi),new Text(attr))!=null){
+                    item_id=pageItemID.evaluate(new Text(turi),new Text(attr)).toString();
+                }
+                if(std!=null){
+                    std+=":"+item_id;
+                }
+            }
         }
+
         if (null != std) {
+            //过滤条件
             if ("通用浏览器".equals(tpt) || "酒店下单通用浏览器".equals(tpt) || "".equals(tpt)) {
                 tpt = null;
             }
-            if (std.equals(tpt)) {
+            //解析tpt
+            if (stp.equals(tpt)) {
                 list.add(std);
             } else {
                 if (tpt == null) {
@@ -179,7 +239,7 @@ public class PageEtl extends UDF {
             }
         }
 
-        jsonclear(s);
+        jsonclear(s,attr,idex);
     }
 
 
@@ -212,7 +272,7 @@ public class PageEtl extends UDF {
         System.out.println(pageEtl.evaluate(text, text1, new Text(attr)));
 
         String tee="{\"father_umddid\":10183,\"_tp\":\"大搜索\",\"io\":\"o\",\"leaf1\":\"detail\",\"rhost\":\"app\",\"mddid\":\"10222\",\"busclass\":\"poi\",\"identifier\":\"FDD3A2F3B662495AAB7760373161F5E8\",\"_tpt\":\"搜索结果点击\",\"otype\":\"dir\",\"leaf2\":\"\",\"child_channel\":0,\"root\":\"poi\",\"travel_status\":\"{\\\"status\\\":1,\\\"mddid\\\":10222,\\\"strategy\\\":\\\"T6\\\"}\",\"bustype\":3,\"portrait\":\"1\",\"start\":\"1547547797.755949\",\"name\":\"POI详情H5页\",\"url\":\"https://m.mafengwo.cn/poi/poi/detail?poiid=2799\",\"channel_type\":\"other\",\"merge_channel\":2581,\"out\":\"child\",\"travel_status.strategy\":\"T6\",\"_tl\":\"2\",\"rleaf1\":\"main\",\"ref_name\":\"大搜索\",\"_tpre\":\"{\\\"_tpre\\\":{\\\"_turi\\\":\\\"http:\\\\/\\\\/app.mafengwo.cn\\\\/launch\\\",\\\"_tl\\\":\\\"0\\\",\\\"_tp\\\":\\\"启动\\\",\\\"_tid\\\":\\\"8533F6ABB20441C88A3D57857C7C7D48\\\",\\\"_tpi\\\":\\\"启动\\\",\\\"_tpt\\\":\\\"正常\\\"},\\\"_tp\\\":\\\"首页\\\",\\\"_tid\\\":\\\"FAB83FCB1DD7433E9E72CA63AA832E4B\\\",\\\"_tl\\\":\\\"1\\\",\\\"_tpi\\\":\\\"A6E1813F14E8493BB390DA3C4C8DECFC\\\",\\\"_turi\\\":\\\"http:\\\\/\\\\/app.mafengwo.cn\\\\/index\\\",\\\"_tpt\\\":\\\"首页大搜索\\\"}\",\"shumeng_did\":\"D2y/2fKmuuHesLDGtdPSQ1Sj788pkuXldIgSUHD8/oHmkXc9\",\"busid\":\"2799\",\"travel_status.status\":1,\"umddid_state\":10183,\"_m_open_udid_fix\":\"AAC3A901-D20A-4F06-B2A9-FBC0779207A8\",\"type\":\"web\",\"refer\":\"http://app.mafengwo.cn/search/main?keyword=%E9%93%B6%E5%BA%A7\",\"channel\":2581,\"_tpa\":\"启动_首页_大搜索\",\"travel_status.mddid\":10222,\"host\":\"app\",\"in\":\"parent\",\"index_in_launch\":\"2\",\"min\":\"18:24\",\"duration\":\"56.247836\",\"travelling\":1,\"_tid\":\"362140B1C5014A3A91A74D3C125515F6\",\"_tpi\":\"770C66B5DF0D493AB16703EEFB3D2CE4\",\"rroot\":\"search\",\"_turi\":\"http://app.mafengwo.cn/search/main?keyword=%E9%93%B6%E5%BA%A7\"}";
-
+        System.out.println(pageEtl.evaluate(null,null,null,new IntWritable(0)));
     }
 }
 

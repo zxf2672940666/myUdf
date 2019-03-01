@@ -24,16 +24,13 @@ public class PageTransform extends UDF {
     }
     //用于得到stdname
     public Text evaluate(Text u,Text a, Text b) {
-        if (null == a || a.getLength() <= 0) {
-            return null;
-        }
         PageName pageName=new PageName();
         Text ta=pageName.evaluate(u,a);
         String aa;
         if(null==ta){
             aa="(不符合页面资源化)";
         }else {
-            aa = pageName.evaluate(u, a).toString();
+            aa = ta.toString();
         }
         String bb=b.toString();
         String c=null;
@@ -103,7 +100,7 @@ public class PageTransform extends UDF {
             String s="闪屏页";
             Text text=new Text();
             text.set(s);
-            String u="http://app.mafengwo.cn/launch_splash";
+            String u="https://m.mafengwo.cn/sales/order/ticketbooking?sales_id=1004430&sku_id=5265753&source=0";
 
             Text a=new Text("std");
             System.out.println(pageTransform.evaluate(new Text(u),text,a));

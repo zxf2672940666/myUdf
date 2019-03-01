@@ -50,7 +50,7 @@ public class PageItemID extends UDF {
                  else if(!"".equals(getUriparameter(uri, "guide_id"))){piid=getUriparameter(uri,"guide_id");}
                  else{piid=null;}
             }else if(parse_url(uri,"path","/localdeal/mdd_topic")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"gonglve/ziyouxing/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/sales/product_detail")){
                 piid=getUriparameter(uri,"sale_id");
             }else if(parse_url(uri,"path","/travel_note/detail")){
@@ -64,9 +64,9 @@ public class PageItemID extends UDF {
                  else if(!"".equals(getUriparameter(uri, "topic_id"))){piid=getUriparameter(uri,"topic_id");}
                  else{piid=null;}
             }else if(parse_url(uri,"path","/weng/detail")){
-                piid= matchInt(uri,"(\\d+)");
+                piid=matchInt(getUriparameter(uri, "weng_id"),"(\\d+)");
             }else if(parse_url(uri,"path","/weng/recommend_detail")){
-                piid= matchInt(uri,"(\\d+)");
+                piid=matchInt(getUriparameter(uri, "weng_id"),"(\\d+)");
             }else if(parse_url(uri,"path","/video/detail")){
                 piid=getUriparameter(uri,"video_id");
             }else if(parse_url(uri,"path","/video/page_detail")){
@@ -95,17 +95,17 @@ public class PageItemID extends UDF {
             }else if(parse_url(uri,"path","poi/free_lunch/")){
                 piid=getUriparameter(uri,"id");
             }else if(parse_url(uri,"path","/poi/sub_guide_")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/poi/sub_guide_(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","poi/info/\\d+-simple.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"poi/info/(\\d+)\\-simple.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/poi/detail")){
                  if(!"".equals(getUriparameter(uri, "poiid"))){piid=getUriparameter(uri,"poiid");}
                  else if(!"".equals(getUriparameter(uri, "poi_id"))){piid=getUriparameter(uri,"poi_id");}
                  else{piid=null;}
             }else if(parse_url(uri,"path","/poi/info/\\d+")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/poi/info/(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/poi/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/poi/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/poi/correct/")){
                 piid=getUriparameter(uri,"poiid");
             }else if(parse_url(uri,"path","/poi/comment")){
@@ -115,35 +115,35 @@ public class PageItemID extends UDF {
             }else if(parse_url(uri,"path","hotelzd/index_v2.php")){
                 piid=getUriparameter(uri,"iHotelId");
             }else if(parse_url(uri,"path","/hotel/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/hotel/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/flight/inter/seats")){
                 piid=getUriparameter(uri,"destCode");//https://m.mafengwo.cn/flight/inter/seats?status=0&adult_nums=1&departCode=HKT&departCity=%E6%99%AE%E5%90%89%E5%B2%9B&destCode=BKK&destCity=%E6%9B%BC%E8%B0%B7&departDate=2018-10-30&source=app_home&child_nums=0&baby_nums=0&dep_date_flightNo=20181030FD3026&curFlightListCacheKey=HKTBKK-20181030-1%230%230-All
             }else if(parse_url(uri,"path","/flight/seats")){
                 piid=getUriparameter(uri,"destCode");
             }else if(parse_url(uri,"path","/sales/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid=matchInt(matchblock(uri,"/sales/\\d+\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/sales/ski/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid=matchInt(matchblock(uri,"/sales/ski/\\d+\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/localdeals/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/localdeals/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/cruise/\\d+.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/cruise/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","sales/product_detail")){
-                piid= matchInt(uri,"sale_id=(\\d+)");
+                piid=matchInt(matchblock(uri,"sales/product_detail"),"(\\d+)");
             }else if(parse_url(uri,"path","gl/guide/article/info/index")){
                 piid=getUriparameter(uri,"article_id");
             }else if(parse_url(uri,"path","/gonglve/ziyouxing/\\d+\\.html")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid=matchInt(matchblock(uri,"/gonglve/ziyouxing/\\d+\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","gonglve/ziyouxing/public/home/index")){
                 piid=getUriparameter(uri,"public_id");
             }else if(parse_url(uri,"path","/gl/catalog/index")){
                 piid=getUriparameter(uri,"id");
             }else if(parse_url(uri,"path","/gonglve/zt\\-\\d+")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/gonglve/zt\\-(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/gonglve/mdd\\-\\d+")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/gonglve/mdd\\-(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/localdeals/mdd_topic_")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/localdeals/mdd_topic_(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/gl/article/index")){
                 piid=getUriparameter(uri,"id");
             }else if(parse_url(uri,"path","/gl/catalog/index")){
@@ -153,9 +153,9 @@ public class PageItemID extends UDF {
             }else if(parse_url(uri,"path","/gl/article/preview")){
                 piid=getUriparameter(uri,"id");
             }else if(parse_url(uri,"path","/weixin/article")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/weixin/article\\-(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/insurance/detail/")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/insurance/detail/(\\d+)"),"(\\d+)");
             }else if(parse_url(uri,"path","/weng/detail/comment_list")){
                 piid="weng_detail";
             }else if(parse_url(uri,"path","/weng/detail$")){
@@ -168,7 +168,7 @@ public class PageItemID extends UDF {
             }else if(parse_url(uri,"path","/g/i/(\\d+)\\.html")){
                 piid=matchInt(uri,"(\\d+)");
             }else if(parse_url(uri,"path","/mdd/article\\.php")){
-                piid=matchInt(uri,"(\\d+)");
+              piid=matchInt(getUriparameter(uri,"id"),"(\\d+)");
             }else if(parse_url(uri, "path","/activity_city/home")){
                 piid=getUriparameter(uri,"activity_id");
             }else if(parse_url(uri, "path","/activity_city/Home")){
@@ -192,7 +192,7 @@ public class PageItemID extends UDF {
             }else if(parse_url(uri,"path","customize/scheme/index")){
                 piid=getUriparameter(uri,"id");
             }else if(parse_url(uri,"path","/movie/detail/")){
-                piid= matchInt(getUriparameter(uri,"path"),"(\\d+)");
+                piid= matchInt(matchblock(uri,"/movie/detail/(\\d+)\\.html"),"(\\d+)");
             }else if(parse_url(uri,"path","/travel-news/(\\d+)\\.html")){
                 piid=matchInt(uri,"(\\d+)");
             }else if(parse_url(uri,"uri","/nb/h5/poi_base_info.php")){
@@ -255,9 +255,10 @@ public class PageItemID extends UDF {
 
     public static void main(String[] args) {
         PageItemID pageItemID=new PageItemID();
-        String a="";
+        String a="https://m.mafengwo.cn/saless/20http:/www.mafengwo.cn/sales/2229594.html";
         Text text1=new Text(a);
-        Text evaluate = pageItemID.evaluate(text1, new Text(""));
+        String attr="{\"io\":\"i\",\"root\":\"weng\",\"duration\":\"14669\",\"out\":\"parent\",\"rroot\":\"weng\",\"merge_channel\":\"direct\",\"_tp\":\"目的地嗡嗡列表\",\"_tl\":3,\"_tid\":\"6c123ebe-1b38-4282-9da6-b4e1fdd4f671\",\"rleaf1\":\"wengs_list\",\"umddid_state\":21536,\"min\":\"14:59\",\"channel\":\"direct\",\"_tpt\":\"目的地嗡嗡列表\",\"type\":\"native\",\"leaf2\":\"\",\"_uri\":\"app.mafengwo.cn/mdd/weng_list?_ouri=http%3A%2F%2Fm.mafengwo.cn%2Fnb%2Fpublic%2Fsharejump.php%3Ftype%3D49%26mddid%3D21358%26mdd_name%3D%25E6%2599%25AE%25E6%25B4%25B1&mdd_id=21358\",\"otype\":\"inner\",\"host\":\"app\",\"url\":\"http://app.mafengwo.cn/weng/detail?null\",\"channel_type\":\"direct\",\"rleaf2\":\"mdd_list\",\"name\":\"嗡嗡详情\",\"leaf1\":\"detail\",\"in\":\"parent\",\"travelling\":-1,\"duration_fixed\":15,\"refer\":\"http://app.mafengwo.cn/mdd/weng_list?_ouri=http%3A%2F%2Fm.mafengwo.cn%2Fnb%2Fpublic%2Fsharejump.php%3Ftype%3D49%26mddid%3D21358%26mdd_name%3D%25E6%2599%25AE%25E6%25B4%25B1&mdd_id=21358\",\"start\":\"1551250765506\",\"rhost\":\"app\",\"_tpa\":\"闪屏页_首页_当地主页_目的地嗡嗡列表\",\"father_umddid\":10099,\"travel_status\":\"{\\\"status\\\":2,\\\"mddid\\\":\\\"84521\\\",\\\"strategy\\\":\\\"H1\\\"}\",\"travel_status.status\":2,\"travel_status.mddid\":\"84521\",\"travel_status.strategy\":\"H1\"}";
+        Text evaluate = pageItemID.evaluate(text1, new Text(attr));
         System.out.println(evaluate);
     }
 

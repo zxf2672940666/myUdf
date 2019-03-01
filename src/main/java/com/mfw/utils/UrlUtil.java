@@ -84,19 +84,44 @@ public class UrlUtil {
             return url1.getRef();
         }else{
             String query = url1.getQuery();
+         //   System.out.println(query);
             String quevalue = "";
+            if(query==null){
+                return quevalue;
+            }
                 String[] s = query.split("&");
                 for (String s1 : s) {
-                    if (s1.contains(type)) {
-                        quevalue = s1.split("=")[1];
-                        break;
-                    }
+                        if(s1.split("=").length>1) {
+                            if(s1.split("=")[0].equals(type)) {
+                                quevalue = s1.split("=")[1];
+                                break;
+                            }
+                        }
             }
+                if(quevalue.equals("")){
+                    return null;
+                }
                 return quevalue;
         }
     }
 
+    public static String matchblock(String uri,String block){
+        if(uri==null){
+            return null;
+        }
+        Pattern pattern = Pattern.compile(block);
+        Matcher matcher = pattern.matcher(uri);
+        while(matcher.find()) {
+            return matcher.group();
+        }
+        return null;
+    }
+
+
     public static String matchInt(String uri,String reg){
+        if(uri==null){
+            return null;
+        }
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(uri);
         while(matcher.find()) {
@@ -107,7 +132,10 @@ public class UrlUtil {
 
     public static void main(String[] args) {
         String s = UrlUtil.matchInt("http://payitf.mafengwo.cn/return/1626538985454505/988", "(\\d+)");
-        System.out.println(s);
+        String u="http://app.mafengwo.cn/weng/detail?null";
+        String hotel_id = UrlUtil.getUriparameter(u, "weng_id");
+        System.out.println(hotel_id);
+        System.out.println(matchInt(null,"/a"));
 
     }
 
