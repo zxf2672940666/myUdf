@@ -28,119 +28,123 @@ public class PageEtl extends UDF {
 
     //四个参数为triggleLink
     public Text evaluate(Text uri, Text puri, Text attr, IntWritable b) {
-        if (null == uri || null == attr || attr.getLength() == 0) {
-            return null;
-        }
-        if (uri.getLength() == 0) {
-            return null;
-        }
-        PageTransform pageTransform = new PageTransform();
-        PageItemID pageItemID=new PageItemID();
-        String page_u;
-        String page_p;
-        String page_item_p;
-        jsonGetAttr(attr.toString()); //获取attr第一层的attr_name,attr_tp,attr_tpt,attr_tpre
-        //uri 和 attr_name 解析出 std_name
-        if("启动".equals(attr_name)){
-            page_u="启动";
-        }else if("启动页".equals(attr_name)){
-            page_u="启动页";
-        }else {
-            Text text1;
-            if(attr_name!=null) {
-                text1 = pageTransform.evaluate(uri, new Text(attr_name));
-            }else {
-                text1= pageTransform.evaluate(uri, new Text(""));
+        try {
+            if (null == uri || null == attr || attr.getLength() == 0) {
+                return null;
             }
-            if (null == text1) {
-                page_u = null;
+            if (uri.getLength() == 0) {
+                return null;
+            }
+            PageTransform pageTransform = new PageTransform();
+            PageItemID pageItemID = new PageItemID();
+            String page_u;
+            String page_p;
+            String page_item_p;
+            jsonGetAttr(attr.toString()); //获取attr第一层的attr_name,attr_tp,attr_tpt,attr_tpre
+            //uri 和 attr_name 解析出 std_name
+            if ("启动".equals(attr_name)) {
+                page_u = "启动";
+            } else if ("启动页".equals(attr_name)) {
+                page_u = "启动页";
             } else {
-                page_u = text1.toString();
+                Text text1;
+                if (attr_name != null) {
+                    text1 = pageTransform.evaluate(uri, new Text(attr_name));
+                } else {
+                    text1 = pageTransform.evaluate(uri, new Text(""));
+                }
+                if (null == text1) {
+                    page_u = null;
+                } else {
+                    page_u = text1.toString();
+                }
             }
-        }
 
-       // System.out.println(page_u);
-        //puri 和 attr_tp 解析出 std_name
+            // System.out.println(page_u);
+            //puri 和 attr_tp 解析出 std_name
 
-        if (null == puri) {
-            page_p = null;
-        } else if("启动".equals(attr_tp)){
-            page_p="启动";
-        }else if("启动页".equals(attr_tp)){
-            page_p="启动页";
-        }else {
-            Text text1;
-            if(attr_tp!=null) {
-                text1 = pageTransform.evaluate(puri, new Text(attr_tp));
-            }else {
-                text1=  pageTransform.evaluate(puri, new Text(""));
-            }
-            if (null == text1) {
+            if (null == puri) {
                 page_p = null;
+            } else if ("启动".equals(attr_tp)) {
+                page_p = "启动";
+            } else if ("启动页".equals(attr_tp)) {
+                page_p = "启动页";
             } else {
-                page_p = text1.toString();
+                Text text1;
+                if (attr_tp != null) {
+                    text1 = pageTransform.evaluate(puri, new Text(attr_tp));
+                } else {
+                    text1 = pageTransform.evaluate(puri, new Text(""));
+                }
+                if (null == text1) {
+                    page_p = null;
+                } else {
+                    page_p = text1.toString();
+                }
             }
-        }
-        String pagep2=page_p; //存放page_p
-        //System.out.println(page_p);
-        //puri 和 attr解析出 page_item_p
-        if(b.get()==0) {
-            if (pageItemID.evaluate(puri, attr) == null) {
-                page_item_p = "";
+            String pagep2 = page_p; //存放page_p
+            //System.out.println(page_p);
+            //puri 和 attr解析出 page_item_p
+            if (b.get() == 0) {
+                if (pageItemID.evaluate(puri, attr) == null) {
+                    page_item_p = "";
+                } else {
+                    page_item_p = pageItemID.evaluate(puri, attr).toString();
+                }
+                if (page_p != null) {
+                    page_p += ":" + page_item_p;
+                }
+            }
+            //拼接tpt
+            if ("通用浏览器".equals(attr_tpt) || "酒店下单通用浏览器".equals(attr_tpt) || "".equals(attr_tpt)) {
+                attr_tpt = null;
+            }
+            if (page_p != null && !pagep2.equals(attr_tpt) && attr_tpt != null && !"".equals(attr_tpt)) {
+                page_p = page_p + "+" + attr_tpt;
+            }
+            String ttpre = tpre;
+
+            if (b.get() == 0) {
+                list.clear();
+                jsonclear(ttpre, attr.toString(), b.get());
+                reverseList1(list);
+                if (!"".equals(page_p)) {
+                    list.add(page_p);
+                }
             } else {
-                page_item_p = pageItemID.evaluate(puri, attr).toString();
+                list.clear();
+                jsonclear(ttpre, attr.toString(), b.get());
+                reverseList1(list);
+                if (!"".equals(page_p)) {
+                    list.add(page_p);
+                }
+                if (!"".equals(page_u)) {
+                    list.add(page_u);
+                }
             }
-            if(page_p!=null){
-                page_p+=":"+page_item_p;
-            }
-        }
-        //拼接tpt
-        if ("通用浏览器".equals(attr_tpt) || "酒店下单通用浏览器".equals(attr_tpt) || "".equals(attr_tpt)) {
-            attr_tpt = null;
-        }
-        if (page_p != null && !pagep2.equals(attr_tpt) && attr_tpt != null && !"".equals(attr_tpt)) {
-            page_p = page_p + "+" + attr_tpt;
-        }
-        String ttpre = tpre;
+            //数组去重
+            removeDuplicate(list);
 
-        if (b.get() == 0) {
-            list.clear();
-            jsonclear(ttpre,attr.toString(),b.get());
-            reverseList1(list);
-            if (!"".equals(page_p)) {
-                list.add(page_p);
+            StringBuilder re = new StringBuilder();
+            for (String s : list) {
+                if (s != null) {
+                    re.append(s).append("-->");
+                }
             }
-        } else {
-            list.clear();
-            jsonclear(ttpre,attr.toString(),b.get());
-            reverseList1(list);
-            if (!"".equals(page_p)) {
-                list.add(page_p);
-            }
-            if (!"".equals(page_u)) {
-                list.add(page_u);
-            }
-        }
-        //数组去重
-        removeDuplicate(list);
-
-        StringBuilder re = new StringBuilder();
-        for (String s : list) {
-            if(s!=null) {
-                re.append(s).append("-->");
-            }
-        }
-        if (re.length() == 0) {
-            return null;
-        } else {
-            re = new StringBuilder(re.substring(0, re.length() - 3));
             if (re.length() == 0) {
                 return null;
             } else {
-                Text text=new Text();
-                text.set(re.toString());
-                return text;
+                re = new StringBuilder(re.substring(0, re.length() - 3));
+                if (re.length() == 0) {
+                    return null;
+                } else {
+                    Text text = new Text();
+                    text.set(re.toString());
+                    return text;
+                }
             }
+        }catch (Exception e){
+            return null;
         }
     }
 

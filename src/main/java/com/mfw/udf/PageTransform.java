@@ -24,57 +24,61 @@ public class PageTransform extends UDF {
     }
     //用于得到stdname
     public Text evaluate(Text u,Text a, Text b) {
-        PageName pageName=new PageName();
-        Text ta=pageName.evaluate(u,a);
-        String aa;
-        if(null==ta){
-            aa="(不符合页面资源化)";
-        }else {
-            aa = ta.toString();
-        }
-        String bb=b.toString();
-        String c=null;
+        try {
+            PageName pageName = new PageName();
+            Text ta = pageName.evaluate(u, a);
+            String aa;
+            if (null == ta) {
+                aa = "(不符合页面资源化)";
+            } else {
+                aa = ta.toString();
+            }
+            String bb = b.toString();
+            String c = null;
        /* for (Map.Entry<String, String> entry : map.entrySet()) {
             entry.getValue();
             System.out.println("line " +  entry.getKey() + ": " + entry.getValue());
         }
         System.out.println(map.size());
         System.out.println(map.get("闪屏页5")+"=====");*/
-        if (bb.equals("std")) {
-            c = map.get(aa+"1");
-            if(null==c){
-                c=map.get("(不符合页面资源化)1");
+            if (bb.equals("std")) {
+                c = map.get(aa + "1");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)1");
+                }
+            } else if (bb.equals("level1")) {
+                c = map.get(aa + "2");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)2");
+                }
+            } else if (bb.equals("level2")) {
+                c = map.get(aa + "3");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)3");
+                }
+            } else if (bb.equals("level3")) {
+                c = map.get(aa + "4");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)4");
+                }
+            } else if (bb.equals("types")) {
+                c = map.get(aa + "5");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)5");
+                }
+            } else if (bb.equals("channel")) {
+                c = map.get(aa + "6");
+                if (null == c) {
+                    c = map.get("(不符合页面资源化)6");
+                }
             }
-        }else if(bb.equals("level1")){
-            c = map.get(aa+"2");
-            if(null==c){
-                c=map.get("(不符合页面资源化)2");
+            if (null == c) {
+                return null;
             }
-        }else if(bb.equals("level2")){
-            c = map.get(aa+"3");
-            if(null==c){
-                c=map.get("(不符合页面资源化)3");
-            }
-        }else if(bb.equals("level3")){
-            c = map.get(aa+"4");
-            if(null==c){
-                c=map.get("(不符合页面资源化)4");
-            }
-        }else if(bb.equals("types")){
-            c = map.get(aa+"5");
-            if(null==c){
-                c=map.get("(不符合页面资源化)5");
-            }
-        }else if(bb.equals("channel")){
-            c = map.get(aa+"6");
-            if(null==c){
-                c=map.get("(不符合页面资源化)6");
-            }
-        }
-        if(null==c){
+            return new Text(c);
+        }catch (Exception e){
             return null;
         }
-        return new Text(c);
 
     }
 
@@ -100,10 +104,10 @@ public class PageTransform extends UDF {
             String s="闪屏页";
             Text text=new Text();
             text.set(s);
-            String u="https://m.mafengwo.cn/sales/order/ticketbooking?sales_id=1004430&sku_id=5265753&source=0";
+            String u="https://m.mafengwo.cn/customize/v2?demand_id=";
 
             Text a=new Text("std");
-            System.out.println(pageTransform.evaluate(new Text(u),text,a));
+            System.out.println(pageTransform.evaluate(new Text(u),null,a));
         }
 
 

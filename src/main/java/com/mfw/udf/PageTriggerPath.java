@@ -12,23 +12,27 @@ import org.apache.hadoop.io.Text;
  **/
 public class PageTriggerPath extends UDF {
     public Text evaluate(Text uri, Text puri, Text attr) {
-        PageEtl pageEtl=new PageEtl();
-        Text a=pageEtl.evaluate(uri,puri,attr,new IntWritable(1));
-        if(a==null){
+        try {
+            PageEtl pageEtl = new PageEtl();
+            Text a = pageEtl.evaluate(uri, puri, attr, new IntWritable(1));
+            if (a == null) {
+                return null;
+            }
+            String aa = a.toString();
+            String[] path = aa.split("-->");
+            StringBuilder p = new StringBuilder();
+            for (int i = 0; i < path.length - 1; i++) {
+                String[] j = path[i].split("\\+");
+                p.append(j[0]).append("_");
+
+            }
+            if (p.length() >= 1) {
+                p = new StringBuilder(p.substring(0, p.length() - 1));
+            }
+            return new Text(p.toString());
+        }catch (Exception e){
             return null;
         }
-        String aa=a.toString();
-        String[] path = aa.split("-->");
-        StringBuilder p= new StringBuilder();
-        for (int i=0;i<path.length-1;i++) {
-            String[] j = path[i].split("\\+");
-            p.append(j[0]).append("_");
-
-        }
-        if (p.length() >= 1) {
-            p = new StringBuilder(p.substring(0, p.length() - 1));
-        }
-        return new Text(p.toString());
     }
 
     public static void main(String[] args) {
